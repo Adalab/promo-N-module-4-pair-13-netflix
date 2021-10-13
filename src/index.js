@@ -1,5 +1,5 @@
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
 
 // create and config server
 const server = express();
@@ -12,23 +12,27 @@ server.listen(serverPort, () => {
   console.log(`Server listening at http://localhost:${serverPort}`);
 });
 
+// configuración del servidor de estáticos:
+const staticServerPath = "./public";
+server.use(express.static(staticServerPath));
+
 // escribimos los endepoints que queramos
 
-server.get('/movies', (req, res) => {
+server.get("/movies", (req, res) => {
   const response = {
     success: true,
     movies: [
       {
-        id: '1',
-        title: 'Gambita de dama',
-        gender: 'Drama',
-        image: 'https://via.placeholder.com/150',
+        id: "1",
+        title: "Gambita de dama",
+        gender: "Drama",
+        image: "https://via.placeholder.com/150",
       },
       {
-        id: '2',
-        title: 'Friends',
-        gender: 'Comedia',
-        image: 'https://via.placeholder.com/150',
+        id: "2",
+        title: "Friends",
+        gender: "Comedia",
+        image: "https://via.placeholder.com/150",
       },
     ],
   };
