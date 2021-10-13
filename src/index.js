@@ -13,7 +13,7 @@ server.listen(serverPort, () => {
 });
 
 // configuración del servidor de estáticos:
-const staticServerPath = "./public";
+const staticServerPath = "./src/public-react";
 server.use(express.static(staticServerPath));
 
 // escribimos los endepoints que queramos
