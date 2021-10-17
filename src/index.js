@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const dataBase = require("better-squlite3");
+const Database = require("better-sqlite3");
 
 // create and config server
 const server = express();
@@ -19,8 +19,8 @@ server.listen(serverPort, () => {
 //   }
 // });
 
-// configurar db
-//const db =
+// configurar db: esta constante apunta a una conexión a la base de datos
+const db = new Database("./src/db/database.db");
 
 // este endpoint debe ir antes de los servidores estáticos sino no gestionará la petición pq la gestionarán los servidores estáticos
 server.get("/movie/:movieId", (req, res) => {
@@ -34,22 +34,14 @@ server.use(express.static(staticServerPath));
 // escribimos los endepoints que queramos
 
 server.get("/movies", (req, res) => {
+  //Esta operación prepara una consulta a nuestra base de datos que selecciona todas las peliculas.
+  const moviesQuery = db.prepare("SELECT * FROM movies");
+  // Aquí se ejecuta la consulta de arriba y pide que todas las peliculas seleccionadas sean devueltas como array de objetos
+  const movies = moviesQuery.all();
+  //console.log(movies);
   const response = {
     success: true,
-    movies: [
-      {
-        id: "1",
-        title: "Gambita de dama",
-        gender: "Drama",
-        image: "https://via.placeholder.com/150",
-      },
-      {
-        id: "2",
-        title: "Friends",
-        gender: "Comedia",
-        image: "https://via.placeholder.com/150",
-      },
-    ],
+    movies: movies,
   };
   res.json(response);
 });
