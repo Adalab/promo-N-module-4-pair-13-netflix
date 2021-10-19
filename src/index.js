@@ -23,14 +23,18 @@ server.listen(serverPort, () => {
 const db = new Database("./src/db/database.db");
 
 //nuevo endpoint para registrar nuevas usuarias
-server.post("/login/:sign-up", (req, res) => {
+server.post("/sign-up", (req, res) => {
   const email = req.body.email;
-  const pass = req.body.pass;
-  const query = db.prepare("INSERT into users(email, pass) values(?, ?);");
-  const userInsert = query.run(email, pass);
-  console.log();
+  const pass = req.body.password;
+  console.log(req);
+  /*const query = db.prepare("INSERT into users(email, pass) values(?, ?);");
+  //const userInsert = query.run(email, pass);
+  console.log();*/
+  res.json({
+    success: true,
+    userId: "nuevo-id-añadido",
+  });
 });
-
 // este endpoint debe ir antes de los servidores estáticos sino no gestionará la petición pq la gestionarán los servidores estáticos
 server.get("/movie/:movieId", (req, res) => {
   console.log(req.params.movieId);
