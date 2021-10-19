@@ -36,16 +36,6 @@ server.post("/sign-up", (req, res) => {
   });
 });
 
-// este endpoint debe ir antes de los servidores estáticos sino no gestionará la petición pq la gestionarán los servidores estáticos
-server.get("/movie/:movieId", (req, res) => {
-  const id = parseInt(req.params.movieId);
-  const moviesQuery = db.prepare("SELECT * FROM movies WHERE id = ?");
-  // Aquí se ejecuta la consulta de arriba y pide que todas las peliculas seleccionadas sean devueltas como array de objetos
-  const movie = moviesQuery.get(id);
-  console.log(movie);
-  res.json(movie);
-});
-
 // configuración del servidor de estáticos:
 const staticServerPath = "./src/public-react";
 server.use(express.static(staticServerPath));
